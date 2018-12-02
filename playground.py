@@ -25,7 +25,7 @@ img_filter = ImageFilter(url)
 # gray2.save('greyscale.png')
 # img2 = img_filter.HSVColor(img_filter.original_img)
 # img2.save("HSV.png")
-saturation_filtered_img = img_filter.filter_hsv('greyscale')
+saturation_filtered_img = img_filter.filter_hsv('polarize')
 # arr = np.asarray(saturation_filtered_img)
 
 plt_image=plt.imshow(saturation_filtered_img)
