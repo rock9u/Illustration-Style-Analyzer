@@ -19,7 +19,6 @@ def onselect(eclick, erelease):
 fig = plt.figure()
 ax = fig.add_subplot(111)
 url = "https://wx2.sinaimg.cn/mw1024/bfee4305gy1ftsx96j7rrj22lk2ao4qq.jpg"
-
 img_filter = ImageFilter(url)
 # gray2 = img_filter.original_img.convert('LA')
 # gray2.save('greyscale.png')
@@ -34,5 +33,4 @@ plt_image=plt.imshow(saturation_filtered_img)
 # rs=widgets.RectangleSelector(
 #     ax, onselect, drawtype='box',
 #     rectprops = dict(facecolor='red', edgecolor = 'black', alpha=0.5, fill=True))
-
 plt.show()
