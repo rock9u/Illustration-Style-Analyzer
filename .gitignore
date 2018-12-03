@@ -1,3 +1,7 @@
 /__pycache__
 /.ipynb_checkpoints
 /greyscale.png
+/env
+.vscode
+playground.py
+image study.ipynb

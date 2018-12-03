@@ -7,6 +7,7 @@ class ImageFilter:
         self.original_img = Image.open(io.BytesIO(response.content))
         self.filtered = dict()
         self.FILTERS = {
+            'original' : self.get_original,
             'saturation': self.sat_filter,
             'greyscale' : self.grey_filter,
             'value' : self.value_filter,
@@ -20,6 +21,9 @@ class ImageFilter:
         filtered_im = self.FILTERS[mode](im)
         self.filtered[mode] = filtered_im
         return filtered_im
+
+    def get_original(self,*args, **kwargs):
+        return self.original_img
 
     def sat_filter(self,img):
         if isinstance(img,Image.Image):
