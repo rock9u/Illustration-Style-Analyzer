@@ -28,6 +28,7 @@ class ImageFilter:
     def sat_filter(self,img):
         if isinstance(img,Image.Image):
             h,s,v = img.convert('HSV').split()
+            print(v)
             t = list(s.getdata())
             h.putdata(list(map(lambda x : 0,t)))
             v.putdata(list(map(lambda x : (255-x),t)))
@@ -55,9 +56,6 @@ class ImageFilter:
     def value_filter(self,img):
         if isinstance(img,Image.Image):
             Hdat,Sdat,Vdat = img.convert('HSV').split()
-            t = list(Sdat.getdata())
-            Hdat.putdata(list(map(lambda x : 0,t)))
-            Vdat.putdata(list(map(lambda x : (255-x),t)))
             return Vdat
         else:
             return None
