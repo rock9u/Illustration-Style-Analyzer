@@ -2,9 +2,11 @@ import requests,io
 from PIL import Image
 import colorsys
 class ImageFilter:
-    def __init__(self,url):
-        response = requests.get(url)
-        self.original_img = Image.open(io.BytesIO(response.content))
+    def __init__(self,url=None,image=None):
+        self.original_img=None
+        self.init_url(url)
+        self.init_image(image)
+        self.validate_image()
         self.filtered = dict()
         self.FILTERS = {
             'original' : self.get_original,
@@ -14,6 +16,18 @@ class ImageFilter:
             'polarize'  :self.polarize_filter,
         }
 
+    def init_url(self,url):
+        if url:
+            response = requests.get(url)
+            self.original_img = Image.open(io.BytesIO(response.content))
+
+    def init_image(self,image):
+        if image:
+            self.original_img = image
+
+    def validate_image(self):
+        if self.original_img == None:
+            raise ImageNotExist("Image is empty!")
 
     def filter_hsv(self,mode,im = None):
         if im == None: im = self.original_img
@@ -81,3 +95,7 @@ class ImageFilter:
             
         else:
             return None
+
+class ImageNotExist(Exception):
+    def __init__(self, message):
+        super().__init__(message)
