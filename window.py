@@ -1,10 +1,9 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel
-from PyQt5.QtGui import QIcon, QPixmap,QImage
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget, QScrollArea, QLabel
+from PyQt5.QtGui import QIcon, QPixmap,QImage, QPalette
 import sys
 import random
 from PyQt5 import QtCore, QtWidgets,QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QVBoxLayout, QSizePolicy, QMessageBox, QWidget
 from numpy import arange, sin, pi
 from ImageFilter import *
 from PIL import Image
@@ -58,10 +57,15 @@ class App(QWidget):
         self.url = self.input_bar.text()
         if self.url == '':
             self.url = "https://wx2.sinaimg.cn/mw1024/bfee4305gy1ftsx96j7rrj22lk2ao4qq.jpg"
-        self.img_filter = ImageFilter(self.url)
+        try:
+            self.img_filter = ImageFilter(self.url)
+        except Exception as e:
+            self.show_warning(str(e))
+            return
         self.computer_all_filters()
 
     def computer_all_filters(self):
+        self.image_tab.clear()
         for mode in self.FILTERS_MODES:
             self.create_filter_tabs(mode)
 
@@ -72,9 +76,20 @@ class App(QWidget):
         pixmap = QPixmap.fromImage(ImageQt(saturation_filtered_img.convert("RGBA")))
         label.setPixmap(pixmap)
         label.setSizePolicy(QSizePolicy.Expanding,QSizePolicy.Expanding)
-        self.image_tab.addTab(label,mode)
+
+        scrollArea = QtWidgets.QScrollArea()
+        scrollArea.setBackgroundRole(QtGui.QPalette.Dark)
+        scrollArea.setWidget(label)
+        scrollArea.widgetResizable=True
+
+        self.image_tab.addTab(scrollArea,mode)
         self.resize(pixmap.width(),pixmap.height())
  
+    def show_warning(self,text):
+        warning = QtWidgets.QMessageBox()
+        warning.setText(text)
+        warning.exec()
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()

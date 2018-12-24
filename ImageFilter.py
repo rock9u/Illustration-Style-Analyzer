@@ -67,7 +67,7 @@ class ImageFilter:
             Rdat = []
             Gdat = []
             Bdat = []
-            window = 255/resolution
+            window = 255/(resolution-1)
             for rd,gn,bl in zip(r.getdata(),g.getdata(),b.getdata()) :
             
  
